@@ -5,10 +5,13 @@ FROM node:14
 WORKDIR /app
 
 # Copy code into the /app folder
-COPY . /app
+COPY package.json /app
 
 # Install dependencies in /app
 RUN npm install
+
+# Copy code into the /app folder
+COPY . /app
 
 # Expose port --> this is only for documentation purposes
 EXPOSE 80

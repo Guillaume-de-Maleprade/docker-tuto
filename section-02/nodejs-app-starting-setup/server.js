@@ -3,44 +3,49 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-let userGoal = 'Learn Docker!';
+let userGoals = ['Learn Docker!'];
 
 app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  })
+	bodyParser.urlencoded({
+		extended: false,
+	})
 );
 
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.send(`
+	let goals = '';
+	userGoals.forEach((goal) => (goals += `<div><h3>${goal}</h3></div>`));
+
+	let html = /*html*/ `
     <html>
-      <head>
+        <head>
         <link rel="stylesheet" href="styles.css">
-      </head>
-      <body>
+        </head>
+        <body>
         <section>
-          <h2>My Course Goal</h2>
-          <h3>${userGoal}</h3>
+            <h2>My Course Goals in this tutorial:</h2>
+            ${goals}
         </section>
         <form action="/store-goal" method="POST">
-          <div class="form-control">
+            <div class="form-control">
             <label>Course Goal</label>
             <input type="text" name="goal">
-          </div>
-          <button>Set Course Goal</button>
+            </div>
+            <button>Set Course Goal</button>
         </form>
-      </body>
+        </body>
     </html>
-  `);
+  `;
+
+	res.send(html);
 });
 
 app.post('/store-goal', (req, res) => {
-  const enteredGoal = req.body.goal;
-  console.log(enteredGoal);
-  userGoal = enteredGoal;
-  res.redirect('/');
+	const enteredGoal = req.body.goal;
+	console.log(enteredGoal);
+	userGoals.push(enteredGoal);
+	res.redirect('/');
 });
 
 app.listen(80);
