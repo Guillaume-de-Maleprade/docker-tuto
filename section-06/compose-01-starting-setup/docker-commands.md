@@ -1,13 +1,12 @@
----------------------
-Create Network
----------------------
+# Create Network
 
+```docker
 docker network create goals-net
+```
 
----------------------
-Run MongoDB Container
----------------------
+# Run MongoDB Container
 
+```docker
 docker run --name mongodb \
   -e MONGO_INITDB_ROOT_USERNAME=max \
   -e MONGO_INITDB_ROOT_PASSWORD=secret \
@@ -16,17 +15,18 @@ docker run --name mongodb \
   -d \
   --network goals-net \
   mongo
+```
 
----------------------
-Build Node API Image
----------------------
+# Build Node API Image
 
+```docker
 docker build -t goals-node .
+```
 
----------------------
-Run Node API Container
----------------------
+# Run Node API Container
 
+
+```docker
 docker run --name goals-backend \
   -e MONGODB_USERNAME=max \
   -e MONGODB_PASSWORD=secret \
@@ -38,17 +38,17 @@ docker run --name goals-backend \
   --network goals-net \
   -p 80:80 \
   goals-node
+```
 
----------------------
-Build React SPA Image
----------------------
+# Build React SPA Image
+
 
 docker build -t goals-react .
 
----------------------
-Run React SPA Container
----------------------
+# Run React SPA Container
 
+
+```docker
 docker run --name goals-frontend \
   -v /Users/maximilianschwarzmuller/development/teaching/udemy/docker-complete/frontend/src:/app/src \
   --rm \
@@ -56,10 +56,9 @@ docker run --name goals-frontend \
   -p 3000:3000 \
   -it \
   goals-react
+```
 
----------------------
-Stop all Containers
----------------------
+# Stop all Containers
 
 docker stop mongodb goals-backend goals-frontend
 
