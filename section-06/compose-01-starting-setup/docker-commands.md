@@ -25,7 +25,6 @@ docker build -t goals-node .
 
 # Run Node API Container
 
-
 ```docker
 docker run --name goals-backend \
   -e MONGODB_USERNAME=max \
@@ -42,11 +41,11 @@ docker run --name goals-backend \
 
 # Build React SPA Image
 
-
+```docker
 docker build -t goals-react .
+```
 
 # Run React SPA Container
-
 
 ```docker
 docker run --name goals-frontend \
@@ -60,6 +59,6 @@ docker run --name goals-frontend \
 
 # Stop all Containers
 
-```bash
+```docker
 docker stop mongodb goals-backend goals-frontend
 ```

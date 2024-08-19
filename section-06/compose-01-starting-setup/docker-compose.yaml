@@ -1,0 +1,38 @@
+services:
+
+  mongodb:
+    image: mongo
+    volumes:
+      - data:/data/db
+    env_file:
+      - ./env/mongo.env
+
+  backend:
+    build: ./backend
+    env_file:
+      - ./env/backend.env
+    ports:
+      - 80:80
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+
+# named volumes must be specified at root level and 
+volumes:
+  data:
+  logs:
+
+# networks are created by default for all containers in the compose file
+# by default containers are already using --rm flag
