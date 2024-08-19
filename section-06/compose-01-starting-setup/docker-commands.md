@@ -60,5 +60,6 @@ docker run --name goals-frontend \
 
 # Stop all Containers
 
+```bash
 docker stop mongodb goals-backend goals-frontend
-
+```
